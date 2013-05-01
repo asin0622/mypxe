@@ -1,24 +1,2 @@
 #!ipxe
-{% load static %}
-:retry
-imgfree
-menu Network boot options for {{ mac }}
-item memtest		Memtest86
-item disk_boot		Boot from local disk mbr (hd0)
-choose --timeout 3000 --default memtest selected && goto ${selected} || goto default
-
-:default
-:memtest
-chain {% get_static_prefix %}memtest.0 passes=1 test=3 && goto memory_good || goto memory_bad
-
-:memory_good
-echo memory good
-exit
-
-:memory_bad
-imgfetch 
-echo memory bad
-exit
-
-:disk_boot
-chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloader +1" || goto retry
+chain {{ uri }}${mac}

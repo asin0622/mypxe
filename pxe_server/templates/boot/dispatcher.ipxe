@@ -1,0 +1,28 @@
+#!ipxe
+{% load static %}
+:retry
+imgfree
+menu Network boot options for {{ host.mac }}
+item memtest		Memtest86
+item disk_boot		Boot from local disk mbr (hd0)
+choose --timeout 3000 --default memtest selected && goto ${selected} || goto default
+
+:default
+:memtest
+imgfetch {{ uri }}{% url 'memtest_report.views.report_start' host.mac %}
+chain {% get_static_prefix %}memtest.0 passes={{ host.max_passes }} test={{ host.max_test }} && goto memory_good || goto memory_bad
+
+:memory_good
+imgfetch {{ uri }}{% url 'memtest_report.views.report_good' host.mac %}
+prompt Press any key to continue
+exit
+
+:memory_bad
+imgfetch {{ uri }}{% url 'memtest_report.views.report_bad' host.mac %}
+prompt Press any key to continue
+exit
+
+:disk_boot
+chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloader +1" || goto retry
+prompt Press any key to continue
+exit

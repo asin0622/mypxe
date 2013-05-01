@@ -8,4 +8,7 @@
 <path>/pxe_server/apps</path>
 <path>/pxe_server/lib</path>
 </pydev_pathproperty>
+<pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
+<path>/Users/asin/delta/git/yuhsin/pxe/eggs/SQLAlchemy-0.8.1-py2.7-macosx-10.8-intel.egg</path>
+</pydev_pathproperty>
 </pydev_project>

@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # (r'^admin/', include(admin.site.urls)),
     
     (r'^boot/', include('boot.urls')),
+    (r'^memtest/', include('memtest_report.urls')),
     (r'^demo/', 'boot.views.demo'),
 )
 

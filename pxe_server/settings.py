@@ -61,7 +61,6 @@ STATIC_ROOT = '/tmp/static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-#STATIC_URL = 'http://192.168.22.1:8000/static/'
 STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
