@@ -1,0 +1,12 @@
+{% load static %}
+:memtest
+imgfetch {{ uri }}{% url 'memtest_report.views.report_start' host.mac %}
+chain {% get_static_prefix %}memtest.0 console=ttyS0,115200n8 passes={{ host.max_passes }} test={{ host.max_test }} && goto memory_good || goto memory_bad
+
+:memory_good
+imgfetch {{ uri }}{% url 'memtest_report.views.report_good' host.mac %}
+goto retry
+
+:memory_bad
+imgfetch {{ uri }}{% url 'memtest_report.views.report_bad' host.mac %}
+goto retry

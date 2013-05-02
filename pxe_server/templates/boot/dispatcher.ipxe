@@ -1,28 +1,42 @@
 #!ipxe
 {% load static %}
-:retry
+
+# ----------------------------------------------------------
 imgfree
 menu Network boot options for {{ host.mac }}
-item memtest		Memtest86
+
+item --gap App
+{% for item, val in IPXE_MENUITEM.iteritems %}
+item {{ item }}		{{ val.desc }}
+{% endfor %} 
+item
+
+item --gap Others
+item shell			iPXE shell
+item sleep			Do nothing and wait for new action
 item disk_boot		Boot from local disk mbr (hd0)
-choose --timeout 3000 --default memtest selected && goto ${selected} || goto default
+choose --timeout 30000 --default {{ host.default_action }} selected && goto ${selected} || goto retry
 
-:default
-:memtest
-imgfetch {{ uri }}{% url 'memtest_report.views.report_start' host.mac %}
-chain {% get_static_prefix %}memtest.0 passes={{ host.max_passes }} test={{ host.max_test }} && goto memory_good || goto memory_bad
+# ----------------------------------------------------------
 
-:memory_good
-imgfetch {{ uri }}{% url 'memtest_report.views.report_good' host.mac %}
-prompt Press any key to continue
-exit
+{% for item, val in IPXE_MENUITEM.iteritems %}
+	{% for template in val.templates %}
+{% include template %}
+	{% endfor %}
+{% endfor %} 
 
-:memory_bad
-imgfetch {{ uri }}{% url 'memtest_report.views.report_bad' host.mac %}
-prompt Press any key to continue
-exit
+# prevent error
+:sleep
+#sleep 3
+:retry
+chain {% url 'boot.views.default_entry' %}
 
 :disk_boot
 chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloader +1" || goto retry
 prompt Press any key to continue
-exit
+chain {% url 'boot.views.default_entry' %}
+# can't go back to ipxe 
+
+:shell
+shell
+chain {% url 'boot.views.default_entry' %}

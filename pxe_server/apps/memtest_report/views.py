@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from models import Host, TestResult
+from models import TestResult
 from datetime import datetime
+from boot.models import Host
 
 def report_start(request, mac):
     host, created = Host.objects.get_or_create(_mac=mac)
@@ -15,6 +16,9 @@ def record_status(mac, status):
     result.end_datetime = datetime.now()
     result.is_good = status
     result.save()
+    
+    host.default_action = 'sleep'
+    host.save()
     return result
 
 def report_good(request, mac):

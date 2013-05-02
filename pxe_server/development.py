@@ -13,6 +13,7 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+#     'django.contrib.auth',
 #     'django.contrib.contenttypes',
 #     'django.contrib.sessions',
 #     'django.contrib.messages',
@@ -20,3 +21,10 @@ INSTALLED_APPS = (
     'boot',
     'memtest_report',
 )
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), "apps"),
+    os.path.join(os.path.dirname(__file__), "templates"),
+)
+
+IPXE_MENUITEM = {}
