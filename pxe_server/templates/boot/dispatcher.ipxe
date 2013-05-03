@@ -7,14 +7,15 @@ menu Network boot options for {{ host.mac }}
 
 item --gap App
 {% for item, val in IPXE_MENUITEM.iteritems %}
-item {{ item }}		{{ val.desc }}
+item {{ item }}     {{ val.desc }}
 {% endfor %} 
 item
 
 item --gap Others
-item shell			iPXE shell
-item sleep			Do nothing and wait for new action
-item disk_boot		Boot from local disk mbr (hd0)
+item shell          iPXE shell
+item sleep          Reboot and wait for command
+item disk_boot      Boot from local disk mbr (hd0)
+item poweroff       Poweroff this computer
 choose --timeout 30000 --default {{ host.default_action }} selected && goto ${selected} || goto retry
 
 # ----------------------------------------------------------
@@ -25,18 +26,20 @@ choose --timeout 30000 --default {{ host.default_action }} selected && goto ${se
 	{% endfor %}
 {% endfor %} 
 
-# prevent error
+# prevent too many chain will got error, so just reboot 
 :sleep
 #sleep 3
+:reboot
 :retry
-chain {% url 'boot.views.default_entry' %}
+reboot
 
 :disk_boot
 chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloader +1" || goto retry
-prompt Press any key to continue
-chain {% url 'boot.views.default_entry' %}
 # can't go back to ipxe 
 
 :shell
 shell
 chain {% url 'boot.views.default_entry' %}
+
+:poweroff
+chain {% get_static_prefix %}poweroff.com

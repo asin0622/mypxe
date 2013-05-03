@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 import re
 
 # Create your models here.
@@ -7,7 +6,6 @@ def validate_mac(mac):
     if not re.match('^([a-zA-Z0-9]{2}:){5}[a-zA-Z0-9]{2}$', mac.lower()):
         raise Exception('mac address invalid')
     return mac
-
     
 class Host(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -17,11 +15,8 @@ class Host(models.Model):
     max_passes = models.PositiveSmallIntegerField(default=1)
     max_test = models.PositiveSmallIntegerField(default=4)
     
-    MENU = getattr(settings, 'IPXE_MENUITEM', {})
-    PXE_ACTION = ( (k, v['desc']) for k, v in MENU.iteritems() )
-    
-    default_action = models.CharField(max_length=6, choices=PXE_ACTION, default='sleep')
-    post_action = models.CharField(max_length=6, choices=PXE_ACTION, null=True)
+    default_action = models.CharField(max_length=6, default='sleep')
+    post_action = models.CharField(max_length=6, null=True)
     
     def get_mac(self):
         return self._mac

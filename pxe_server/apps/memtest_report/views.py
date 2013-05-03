@@ -17,7 +17,7 @@ def record_status(mac, status):
     result.is_good = status
     result.save()
     
-    host.default_action = 'sleep'
+    host.default_action = 'sleep' # reboot and retry
     host.save()
     return result
 

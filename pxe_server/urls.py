@@ -1,5 +1,5 @@
 
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     
     (r'^boot/', include('boot.urls')),
     (r'^memtest/', include('memtest_report.urls')),
+    (r'^ubuntu/', include('ubuntu.urls')),
     (r'^demo/', 'boot.views.demo'),
 )
 

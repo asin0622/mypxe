@@ -4,6 +4,7 @@ DEBUG=True
 TEMPLATE_DEBUG=DEBUG
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/tmp/static'
 
 DATABASES = {
     'default': {
@@ -13,13 +14,10 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.messages',
     'django.contrib.staticfiles',                  
     'boot',
     'memtest_report',
+    'ubuntu',
 )
 
 TEMPLATE_DIRS = (
