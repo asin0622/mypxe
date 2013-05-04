@@ -1,0 +1,6 @@
+{% load static %}
+:ubuntu
+kernel {% get_static_prefix %}linux
+initrd {% get_static_prefix %}initrd.gz
+imgargs linux auto=true DEBCONF_DEBUG=5 priority=critical hostname=ubuntu netcfg/no_default_route=true url={{ uri }}/ubuntu/install/${mac}/preseed.cfg -- quite
+boot
