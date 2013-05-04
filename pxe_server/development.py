@@ -18,6 +18,7 @@ INSTALLED_APPS = (
     'boot',
     'memtest_report',
     'ubuntu',
+    'gunicorn',
 )
 
 TEMPLATE_DIRS = (
