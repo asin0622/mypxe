@@ -41,5 +41,10 @@ chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloa
 shell
 chain {% url 'boot.views.default_entry' %}
 
+:poweroff_after_reboot
+imgfetch {{ uri }}{% url 'boot.views.poweroff' host.mac %}
+reboot
+
 :poweroff
+#chain {% get_static_prefix %}grub.exe --config-file="halt"
 chain {% get_static_prefix %}poweroff.com

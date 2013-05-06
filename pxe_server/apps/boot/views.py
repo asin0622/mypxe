@@ -25,3 +25,9 @@ def dispatcher(request, mac):
     return render(request, 'boot/dispatcher.ipxe', 
                   {'host': host, 'uri': uri, 'IPXE_MENUITEM': settings.IPXE_MENUITEM}, 
                   content_type='text/plain')
+    
+def poweroff(request, mac):
+    host = Host.objects.get(_mac=mac)
+    host.default_action = 'poweroff' # reboot and retry
+    host.save()
+    return HttpResponse('poweroff after next reboot')

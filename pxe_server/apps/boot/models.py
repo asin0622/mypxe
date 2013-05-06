@@ -13,7 +13,7 @@ class Host(models.Model):
     
     # default memtest param
     max_passes = models.PositiveSmallIntegerField(default=1)
-    max_test = models.PositiveSmallIntegerField(default=4)
+    max_test = models.PositiveSmallIntegerField(default=1)
     
     default_action = models.CharField(max_length=6, default='sleep')
     post_action = models.CharField(max_length=6, null=True)
