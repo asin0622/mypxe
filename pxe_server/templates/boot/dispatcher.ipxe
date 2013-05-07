@@ -16,7 +16,7 @@ item shell          iPXE shell
 item sleep          Reboot and wait for command
 item disk_boot      Boot from local disk mbr (hd0)
 item poweroff       Poweroff this computer
-choose --timeout 30000 --default {{ host.default_action }} selected && goto ${selected} || goto retry
+choose --timeout 10000 --default {{ host.default_action }} selected && goto ${selected} || goto retry
 
 # ----------------------------------------------------------
 
@@ -28,7 +28,6 @@ choose --timeout 30000 --default {{ host.default_action }} selected && goto ${se
 
 # prevent too many chain will got error, so just reboot 
 :sleep
-#sleep 3
 :reboot
 :retry
 reboot
@@ -41,10 +40,7 @@ chain {% get_static_prefix %}grub.exe --config-file="rootnoverify (hd0);chainloa
 shell
 chain {% url 'boot.views.default_entry' %}
 
-:poweroff_after_reboot
-imgfetch {{ uri }}{% url 'boot.views.poweroff' host.mac %}
-reboot
-
 :poweroff
+#imgfetch {{ uri }}{% url 'boot.views.poweroff' host.mac %}
 #chain {% get_static_prefix %}grub.exe --config-file="halt"
 chain {% get_static_prefix %}poweroff.com

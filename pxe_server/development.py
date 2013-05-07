@@ -14,11 +14,12 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
-    'django.contrib.staticfiles',                  
-    'boot',
+    'django.contrib.staticfiles',
+    'gunicorn',                      
     'memtest_report',
     'ubuntu',
-    'gunicorn',
+    'boot',
+    'plugins'
 )
 
 TEMPLATE_DIRS = (
@@ -26,4 +27,48 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "templates"),
 )
 
-IPXE_MENUITEM = {}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+         }
+    },
+    'formatters': {
+        'standard': {
+            'format' : "%(asctime)s [%(process)d] [%(levelname)s] [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%Y-%m-%d %H:%M:%S"
+        },
+    },
+    'handlers': {
+        'console':{
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'null': {
+            'class':'django.utils.log.NullHandler',
+        },                 
+        'mail_admins': {
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers':['console'],
+            'propagate': False,
+            'level':'INFO',
+        },
+        'gunicorn.error': {
+            'level': 'ERROR',
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        'gunicorn.access': {
+            'level': 'INFO',
+            'handlers': ['null'],
+            'propagate': False,
+        },                
+    }
+}

@@ -2,12 +2,12 @@
 :memtest
 imgfetch {{ uri }}{% url 'memtest_report.views.report_start' host.mac %}
 kernel {% get_static_prefix %}memtest.0 
-imgargs memtest.0 console=ttyS0,115200n8 passes={{ host.max_passes }} test={{ host.max_test }} 
+imgargs memtest.0 console=ttyS0,115200n8 passes={{ host.memtest_params.max_passes }} test={{ host.memtest_params.max_test }} 
 boot && goto memory_good || goto memory_bad
 
 :memory_good
 imgfetch {{ uri }}{% url 'memtest_report.views.report_good' host.mac %}
-goto poweroff_after_reboot
+goto reboot
 
 :memory_bad
 imgfetch {{ uri }}{% url 'memtest_report.views.report_bad' host.mac %}
