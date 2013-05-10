@@ -1,5 +1,7 @@
 
 from pxe_server.settings import *
+import tempfile
+
 DEBUG=True
 TEMPLATE_DEBUG=DEBUG
 
@@ -15,17 +17,29 @@ DATABASES = {
 
 INSTALLED_APPS = (
     'django.contrib.staticfiles',
-    'gunicorn',                      
+    'gunicorn',
+                          
     'memtest_report',
     'ubuntu',
     'boot',
-    'plugins'
+    'plugins',
+    'grouping',
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    }
+}
 
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "apps"),
     os.path.join(os.path.dirname(__file__), "templates"),
 )
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+SESSION_FILE_PATH = tempfile.gettempdir()
 
 LOGGING = {
     'version': 1,

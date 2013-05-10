@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^memtest/', include('memtest_report.urls')),
     (r'^ubuntu/', include('ubuntu.urls')),
     (r'^demo/', 'boot.views.demo'),
+    (r'^group/', include('grouping.urls')),
 )
 
 if settings.DEBUG:

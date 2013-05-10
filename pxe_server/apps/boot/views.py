@@ -1,5 +1,5 @@
 # Create your views here.
-from boot import host_action
+from boot import host_event, host_up
 from django.http import HttpResponse
 from django.shortcuts import render
 from models import Host
@@ -20,6 +20,10 @@ def default_entry(request):
 
 def dispatcher(request, mac):    
     host, created = Host.objects.get_or_create(_mac=mac)
+    
+    host_up.send(sender=Host, instance=host, created=created)
+    host_event.send(sender=host, message='power on.')
+    
     uri = request.build_absolute_uri('/')[:-1]
     return render(request, 'boot/dispatcher.ipxe', 
                   {'host': host, 'uri': uri, 'IPXE_MENUITEM': plugins.get_apps()}, 
@@ -28,5 +32,5 @@ def dispatcher(request, mac):
 # change action back to sleep
 def poweroff(request, mac):
     host = Host.objects.get(_mac=mac)
-    host_action.send(sender=host, action='sleep')
+    host_event.send(sender=host, message='power off.', action='sleep')
     return HttpResponse('change action to sleep after power')

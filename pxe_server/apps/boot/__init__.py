@@ -4,10 +4,13 @@ from django.dispatch import receiver, Signal
 import django.dispatch
 import logging
 
-host_action = Signal(providing_args=["action"])
-host_event = Signal(providing_args=['message'])
+host_up = Signal(providing_args=['instance', 'created'])
+host_event = Signal(providing_args=['message', 'action'])
 
-@receiver(host_action)
-def change_host_next_action(sender, **kargs):
-    logging.info('%s - default action = %s' % (sender, kargs['action'])) 
-    sender.set_default_action(kargs['action'])
+@receiver(host_event)
+def host_event_receiver(sender, message=None, action=None, **kargs):
+    if message is not None:
+        logging.info('%s - %s' % (sender, message))
+    if action is not None:
+        logging.info('%s - default action = %s' % (sender, action)) 
+        sender.set_default_action(action)

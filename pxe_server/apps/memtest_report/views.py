@@ -1,4 +1,4 @@
-from boot import host_action
+from boot import host_event
 from boot.models import Host
 from datetime import datetime
 from django.http import HttpResponse
@@ -20,10 +20,10 @@ def _record_status(mac, status):
 
 def report_good(request, mac):
     host = Host.objects.get(_mac=mac)
-    host_action.send(sender=host, action=host.memtest_params.action_if_good)
+    host_event.send(sender=host, message='%s - memtest good!' % host, action=host.memtest_params.action_if_good)
     return HttpResponse(_record_status(mac, True))
 
 def report_bad(request, mac):
     host = Host.objects.get(_mac=mac)
-    host_action.send(sender=host, action=host.memtest_params.action_if_bad)
+    host_event.send(sender=host, message='%s - memtest bad!' % host, action=host.memtest_params.action_if_bad)
     return HttpResponse(_record_status(mac, False))
