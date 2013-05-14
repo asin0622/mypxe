@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
 from memtest_report import views
+from boot.models import mac_pattern
 
 urlpatterns = patterns('',
-    url(r'^start/(?P<mac>([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2})$', views.report_start),
-    url(r'^good/(?P<mac>([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2})$', views.report_good),
-    url(r'^bad/(?P<mac>([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2})$', views.report_bad),
+    url(r'^start/(?P<mac>%s)$' % mac_pattern, views.report_start),
+    url(r'^good/(?P<mac>%s)$' % mac_pattern, views.report_good),
+    url(r'^bad/(?P<mac>%s)$' % mac_pattern, views.report_bad),
 )

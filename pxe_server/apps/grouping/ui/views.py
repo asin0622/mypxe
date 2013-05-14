@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from grouping.models import Group
+from boot.ui.views import render_index_with_hosts
 from django.core.cache import cache
-from plugins import get_host_actions
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render
+from grouping.models import Group
 
 def index(request):
     group_list = Group.objects.all()
@@ -23,17 +23,6 @@ def index(request):
 def hosts_in_group(request, groupname):
     group = Group.objects.get(name=groupname)
     host_list = group.hosts.all()
-    paginator = Paginator(host_list, 10)
-    
-    page = request.GET.get('page')
-    try:
-        hosts = paginator.page(page)
-    except PageNotAnInteger:
-        hosts = paginator.page(1)
-    except EmptyPage:
-        hosts = paginator.page(paginator.num_pages)
-    
-    actions = get_host_actions()
-    return render(request, 'boot/index.html', {'hosts': hosts, 'actions': actions, 'total_count': host_list.count()})
+    return render_index_with_hosts(request, host_list)
 
 

@@ -1,3 +1,7 @@
+"""
+@todo: need to improve
+"""
+
 import django.dispatch
 from django.dispatch.dispatcher import receiver
 from django.conf import settings
