@@ -16,13 +16,16 @@ class TestResult(models.Model):
     host = models.ForeignKey(Host, related_name='results')
     
     # memtest
-    is_good = models.BooleanField()
+    is_good = models.NullBooleanField(null=True)
     start_datetime = models.DateTimeField(auto_now_add=True)
     end_datetime = models.DateTimeField(null=True)
     
     class Meta:
-        ordering = ["-start_datetime"]
+        ordering = ["-end_datetime"]
         
+    def duration(self):
+        return self.end_datetime - self.start_datetime
+    
     def __unicode__(self):
         res = u'Host (%s) begin test at %s, ' % (self.host._mac, self.start_datetime,)
         if not self.end_datetime:

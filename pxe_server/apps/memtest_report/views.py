@@ -12,7 +12,7 @@ def report_start(request, mac):
 
 def _record_status(mac, status):
     host = Host.objects.get(_mac=mac)
-    result = host.results.all()[0]
+    result = host.results.order_by('-start_datetime')[0]
     result.end_datetime = datetime.now()
     result.is_good = status
     result.save()

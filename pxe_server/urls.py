@@ -16,11 +16,12 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
     
+    (r'^demo/', 'boot.views.demo'),
     (r'^boot/', include('boot.urls')),
     (r'^memtest/', include('memtest_report.urls')),
-    (r'^ubuntu/', include('ubuntu.urls')),
-    (r'^demo/', 'boot.views.demo'),
+    (r'^ubuntu/', include('ubuntu.urls')),    
     (r'^group/', include('grouping.urls')),
+    (r'^', include('console.urls'))
 )
 
 if settings.DEBUG:

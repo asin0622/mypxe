@@ -16,14 +16,18 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    # global
     'django.contrib.staticfiles',
     'gunicorn',
-                          
+    'bootstrap-pagination',
+    # apps
     'memtest_report',
     'ubuntu',
     'boot',
     'plugins',
     'grouping',
+    'console',
+    # snippets
 )
 
 CACHES = {
@@ -36,6 +40,13 @@ CACHES = {
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), "apps"),
     os.path.join(os.path.dirname(__file__), "templates"),
+)
+
+for app in INSTALLED_APPS:
+    TEMPLATE_DIRS += (os.path.join(os.path.dirname(__file__), "apps", app, "templates")), 
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
 )
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'

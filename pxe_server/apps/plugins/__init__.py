@@ -15,3 +15,7 @@ def reg_app(sender, **kargs):
 def get_apps():
     return MENUITEM
     
+def get_host_actions():
+    actions = MENUITEM.keys()
+    actions.extend(['poweroff', 'sleep', 'disk_boot', 'shell']) # default
+    return actions

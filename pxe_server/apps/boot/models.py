@@ -41,3 +41,4 @@ class Host(models.Model):
         
     def __unicode__(self):
         return u'Host with mac address (%s)' % self._mac    
+    

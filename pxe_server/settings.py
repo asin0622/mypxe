@@ -122,9 +122,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'boot',
-    'memtest_report',
-    'ubuntu',
 )
 
 # A sample logging configuration. The only tangible logging

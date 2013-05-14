@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% load bootstrap_pagination %}
+
+{% block main_container %}
+<div class="span9">
+
+    <!-- <h1 class="">Report List</h1> -->
+    <h3>Current listening group is : {{ listening }}</h3>
+    {% bootstrap_paginate groups range=10 show_prev_next="false" show_first_last="true" %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th class="">Group Name</th><th>Action</th>
+            </tr>
+            {% for group in groups %}
+            <tr>
+                <td>
+                    <a href="{% url 'grouping.ui.views.hosts_in_group' group.name %}">{{group}}</a></td>
+                <td>
+                <div class="btn btn-small">
+                    <a href="{% url 'grouping.views.start_listen' group.name %}">Start listen</a>
+                </div>
+                <div class="btn btn-small">
+                    <a href="{% url 'grouping.views.stop_listen' group.name %}">Stop listen</a>
+                </div><!-- <div class="btn-group">
+                <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                <li>
+                <a href="{% url 'grouping.views.start_listen' group.name %}">Listening</a>
+                </li>
+                <li>
+                <a href="{% url 'grouping.views.stop_listen' group.name %}">Stop</a>
+                </li>
+                </ul>
+                </div> --></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- /container -->
+{% endblock %}
+
