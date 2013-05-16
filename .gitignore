@@ -18,3 +18,7 @@
 
 # Sphinx's builds
 /docs/_build
+
+# aptana
+.pydevproject
+.project
