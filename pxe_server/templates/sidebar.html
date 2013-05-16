@@ -1,0 +1,31 @@
+{% load console_extras %}
+
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">
+                Management
+            </li>
+            <li class="{% navactive request 'boot.ui.views.index' %}">
+                <a href="{% url 'boot.ui.views.index' %}" class="">Host</a>
+            </li>
+            <li class="{% navactive request 'grouping.ui.views.index' %}">
+                <a href="{% url 'grouping.ui.views.index' %}" class="">Group</a>
+            </li>
+                  
+            <li class="nav-header">
+                Reports
+            </li>
+            <li class="{% navactive request 'memtest_report.ui.views.index' %}">
+                <a href="{% url 'memtest_report.ui.views.index' %}" class="">Memory test</a>
+            </li>
+            
+            <li class="nav-header">
+                Settings
+            </li>                  
+            <li>
+                <a href="#" class="">Ubuntu</a>
+            </li>
+        </ul>
+    </div><!--/.well -->
+</div><!--/span-->

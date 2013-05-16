@@ -1,0 +1,2 @@
+#!ipxe
+chain {{ uri }}${mac}
