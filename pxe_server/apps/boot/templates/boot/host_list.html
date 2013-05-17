@@ -5,16 +5,16 @@
 <div class="span9">
 
     <h4>Total hosts' interface : {{ total_count }}</h4>
-    {% bootstrap_paginate hosts range=10 show_prev_next="false" show_first_last="true" %}
+    {% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}
 
     <table class="table">
         <tbody>
             <tr>
                 <th>Host</th><th>Default Action</th>
             </tr>
-            {% for host in hosts %}
+            {% for host in host_list %}
             <tr>
-                <td>{{ host }}</td>
+                <td><a href="{% url 'host_detail_view' mac=host.mac %}">{{ host }}</a></td>
                 <td>
                 <div class="btn-group">
                     <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">{{ host.default_action }} <span class="caret"></span></a>

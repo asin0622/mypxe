@@ -1,24 +1,25 @@
-from django.shortcuts import render
 from boot.models import Host
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from plugins import get_host_actions
 
-def render_index_with_hosts(request, host_list):
-    paginator = Paginator(host_list, 10)
+
+class HostDetail(DetailView):
+    model = Host
+    template_name = 'boot/host_detail.html'
+    slug_field = '_mac'
+    slug_url_kwarg = 'mac'
+
+class HostList(ListView):
+    model = Host
+    template_object_name = 'host'
+    template_name = 'boot/host_list.html'
+    paginate_by = 10
     
-    page = request.GET.get('page')
-    try:
-        hosts = paginator.page(page)
-    except PageNotAnInteger:
-        hosts = paginator.page(1)
-    except EmptyPage:
-        hosts = paginator.page(paginator.num_pages)
-    
-    actions = get_host_actions()
-    return render(request, 'boot/index.html', {'hosts': hosts, 'actions': actions, 'total_count': host_list.count()})    
-        
-def index(request):
-    host_list = Host.objects.all()
-    return render_index_with_hosts(request, host_list)
+    def get_context_data(self, **kwargs):
+        context = super(HostList, self).get_context_data(**kwargs)
+        context['total_count'] = Host.objects.count()
+        context['actions'] = get_host_actions()
+        return context
 
 

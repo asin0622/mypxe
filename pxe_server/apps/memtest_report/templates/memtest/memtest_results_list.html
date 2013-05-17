@@ -1,0 +1,20 @@
+<table class="table">
+    <tbody>
+        <tr>
+            <th class="">MAC Address</th><th>Start Datetime</th><th>End Datetime</th><th>Duration</th><th>Result</th>
+        </tr>
+        {% for result in result_list %}
+        <tr>
+            <td><a href="{% url 'host_detail_view' mac=result.host.mac %}">{{ result.host }}</a></td>
+            <td>{{ result.start_datetime }}</td>
+            <td>{{ result.end_datetime }}</td>
+            {% if result.end_datetime %}
+            <td>{{ result.end_datetime|timeuntil:result.start_datetime }}</td>
+            {% else %}
+            <td>{{ date_now|timeuntil:result.start_datetime }}</td>
+            {% endif %}
+            <td>{{ result.is_good|yesno:"Good,Bad,Not finished" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

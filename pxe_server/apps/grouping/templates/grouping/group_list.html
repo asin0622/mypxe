@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% load bootstrap_pagination %}
+
+{% block main_container %}
+<div class="span9">
+    
+    <h3>Current listening group is : {{ listening }}</h3>
+    {% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th class="">Group Name</th><th>Action</th>
+            </tr>
+            {% for group in group_list %}
+            <tr>
+                <td><a href="{% url 'host_in_group_view' group.name %}">{{group}}</a></td>
+                <td>
+                    <div class="btn btn-small">
+                        <a href="{% url 'grouping.views.start_listen' group.name %}">Start listen</a>
+                    </div>
+                    <div class="btn btn-small">
+                        <a href="{% url 'grouping.views.stop_listen' group.name %}">Stop listen</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- /container -->
+{% endblock %}
+

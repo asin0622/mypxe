@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block main_container %}
+<div class="span9">
+    <h4>Memtest results history for : {{ host }}</h4>
+    {% include 'memtest/memtest_results_list.html' with result_list=host.results.all %}
+</div>
+{% endblock %}

@@ -15,7 +15,15 @@ DATABASES = {
     }
 }
 
+INTERNAL_IPS = ('127.0.0.1',)
+ALLOWED_HOSTS = ['localhost']
+
+MIDDLEWARE_CLASSES += (
+#     'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
 INSTALLED_APPS = (
+    'debug_toolbar',
     # global
     'django.contrib.staticfiles',
     'gunicorn',
@@ -27,14 +35,13 @@ INSTALLED_APPS = (
     'plugins',
     'grouping',
     'console',
-    # snippets
 )
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique-snowflake',
-        'TIMEOUT': 600,
+        'TIMEOUT': 3600,  # an hour
     }
 }
 

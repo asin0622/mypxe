@@ -1,28 +1,23 @@
-from boot.ui.views import render_index_with_hosts
+from boot.ui.views import HostList
 from django.core.cache import cache
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from django.views.generic.list import ListView
 from grouping.models import Group
 
-def index(request):
-    group_list = Group.objects.all()
-    paginator = Paginator(group_list, 10)
+
+class GroupList(ListView):
+    model = Group
+    template_object_name = 'group'
+    template_name = 'grouping/group_list.html'
+    paginate_by = 10
     
-    page = request.GET.get('page')
-    try:
-        groups = paginator.page(page)
-    except PageNotAnInteger:
-        groups = paginator.page(1)
-    except EmptyPage:
-        groups = paginator.page(paginator.num_pages)
-    
-    current_listen_group = cache.get('groupname')
-    return render(request, 'grouping/index.html', {'groups': groups, 'listening': current_listen_group})
+    def get_context_data(self, **kwargs):
+        context = super(GroupList, self).get_context_data(**kwargs)
+        context['listening'] = cache.get('groupname')
+        return context
 
 
-def hosts_in_group(request, groupname):
-    group = Group.objects.get(name=groupname)
-    host_list = group.hosts.all()
-    return render_index_with_hosts(request, host_list)
-
-
+class GroupingHostList(HostList):
+    def get_queryset(self):
+        self.group = get_object_or_404(Group, name=self.kwargs['groupname'])
+        return self.group.hosts.all()

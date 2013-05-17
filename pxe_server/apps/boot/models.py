@@ -41,5 +41,5 @@ class Host(models.Model):
     mac = property(get_mac, set_mac)
         
     def __unicode__(self):
-        return u'Host interface with mac address (%s)' % self._mac    
+        return u'mac address (%s)' % self._mac    
     
