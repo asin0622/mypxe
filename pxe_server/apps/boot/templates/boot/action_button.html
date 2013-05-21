@@ -1,0 +1,10 @@
+<div class="btn-group">
+    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">{{ host.default_action }} <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        {% for action in actions %}
+        <li>
+            <a href="{% url 'boot.views.change_action' host.mac action %}">{{action}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

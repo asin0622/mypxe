@@ -1,6 +1,8 @@
+from django.core.cache import get_cache
 from django.db import models
 import re
 
+cache = get_cache('host')
 mac_pattern = '([a-zA-Z0-9]{2}:){5}[a-zA-Z0-9]{2}'
 
 def validate_mac(mac):
@@ -41,5 +43,9 @@ class Host(models.Model):
     mac = property(get_mac, set_mac)
         
     def __unicode__(self):
-        return u'mac address (%s)' % self._mac    
-    
+        return u'%s' % self._mac
+
+def _get_last_action(self):
+    return cache.get(self.mac)
+
+Host.last_action = _get_last_action

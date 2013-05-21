@@ -44,3 +44,15 @@ def change_action(request, mac, action):
     if 'HTTP_REFERER' in request.META:
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     return HttpResponseRedirect('/')
+
+
+def delete_host(request, mac):
+    try:
+        host = Host.objects.get(_mac=mac)
+        host.delete()
+    finally:
+        if 'HTTP_REFERER' in request.META:
+            return HttpResponseRedirect(request.META['HTTP_REFERER'])
+        return HttpResponseRedirect('/')
+
+

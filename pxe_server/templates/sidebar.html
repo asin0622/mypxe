@@ -7,24 +7,25 @@
                 Management
             </li>
             <li class="{% navactive request 'host_list_view' %}">
-                <a href="{% url 'host_list_view' %}" class="">Host</a>
+                <a href="{% url 'host_list_view' %}" class="">host</a>
             </li>
             <li class="{% navactive request 'group_list_view' %}">
-                <a href="{% url 'group_list_view' %}" class="">Group</a>
+                <a href="{% url 'group_list_view' %}" class="">grouping</a>
             </li>
                   
             <li class="nav-header">
                 Reports
             </li>
             <li class="{% navactive request 'memtest_result_list_view' %}">
-                <a href="{% url 'memtest_result_list_view' %}" class="">Memory test</a>
+                <a href="{% url 'memtest_result_list_view' %}" class="">memory test</a>
             </li>
             
             <li class="nav-header">
                 Settings
             </li>                  
             <li>
-                <a href="#" class="">Ubuntu</a>
+                <a href="#" class="">memtest params</a>
+                <a href="{% url 'ubuntu_preseed_param_view' %}" class="">ubuntu preseed</a>
             </li>
         </ul>
     </div><!--/.well -->

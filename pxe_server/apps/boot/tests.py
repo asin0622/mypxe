@@ -9,8 +9,12 @@ from django.test import TestCase
 
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_ipxe(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        
+        response = self.client.get('/boot/')
+        self.assertTrue(response.content.split()[0] == '#!ipxe')
+        
+        response = self.client.get('/boot/aa:bb:cc:dd:ee:ff')
+        self.assertTrue(response.content.split()[0] == '#!ipxe')

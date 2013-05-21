@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block main_container %}
+<div class="span9">
+    <h4>Default ubuntu preseed parameters</h4>
+    <h5>only applied to new host</h5>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>mirror host</th>
+                <th>mirror path</th>
+                <th>action after install</th>
+            </tr>
+            <tr>
+                <td>{{ param.mirror_host }}</td>
+                <td>{{ param.mirror_path }}</td>
+                <td>{{ param.action_after_install }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

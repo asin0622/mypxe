@@ -2,6 +2,50 @@
 
 {% block main_container %}
 <div class="span9">
+    <h3>Joined groups -
+    {% for group in host.groups.all %}
+        {{ group.name }}, 
+    {% endfor %}        
+    </h3>
+
+    <h4>Memtest parameters</h4>
+    {% with host.memtest_params as param %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>max passes</th>
+                <th>max tests</th>
+                <th>action if good</th>
+                <th>action if bad</th>
+            </tr>
+            <tr>
+                <td>{{param.max_passes}}</td>
+                <td>{{param.max_test}}</td>
+                <td>{{param.action_if_good}}</td>
+                <td>{{param.action_if_bad}}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endwith %}
+
+    <h4>Preseed parameters</h4>
+    {% with host.preseed as param %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>mirror host</th>
+                <th>mirror path</th>
+                <th>action after install</th>
+            </tr>
+            <tr>
+                <td>{{param.mirror_host}}</td>
+                <td>{{param.mirror_path}}</td>
+                <td>{{param.action_after_install}}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endwith %}
+
     <h4>Memtest results history for : {{ host }}</h4>
     {% include 'memtest/memtest_results_list.html' with result_list=host.results.all %}
 </div>

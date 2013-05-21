@@ -18,7 +18,6 @@ class HostList(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(HostList, self).get_context_data(**kwargs)
-        context['total_count'] = Host.objects.count()
         context['actions'] = get_host_actions()
         return context
 

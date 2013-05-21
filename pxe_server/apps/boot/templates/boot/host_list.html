@@ -4,28 +4,29 @@
 {% block main_container %}
 <div class="span9">
 
-    <h4>Total hosts' interface : {{ total_count }}</h4>
-    {% bootstrap_paginate page_obj range=10 show_prev_next="false" show_first_last="true" %}
+    <h4>Total hosts' interface : {{ page_obj.paginator.count }}</h4>
+    {% bootstrap_paginate page_obj range=page_obj.paginator.per_page show_prev_next="false" show_first_last="true" %}
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Host</th><th>Default Action</th>
+                <th>Host</th>
+                <th>Last Log</th>
+                <th>Memory good?</th>
+                <th>Default Action</th>
+                <th>Commands</th>
             </tr>
             {% for host in host_list %}
             <tr>
                 <td><a href="{% url 'host_detail_view' mac=host.mac %}">{{ host }}</a></td>
+                <td>{{ host.last_action }}</td>
+                <td>{{ host.last_memtest|yesno:"Good,Bad,?" }}</td>
+                <td>{% include 'boot/action_button.html' with actions=actions boot=boot %}</td>
                 <td>
-                <div class="btn-group">
-                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">{{ host.default_action }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        {% for action in actions %}
-                        <li>
-                            <a href="{% url 'boot.views.change_action' host.mac action %}">{{action}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div></td>
+                    <div class="btn btn-small">
+                        <a href="{% url 'boot.views.delete_host' host.mac %}">remove</a>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

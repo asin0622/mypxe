@@ -1,11 +1,19 @@
 <table class="table">
     <tbody>
         <tr>
-            <th class="">MAC Address</th><th>Start Datetime</th><th>End Datetime</th><th>Duration</th><th>Result</th>
+            <th>MAC Address</th>
+            <th>Max Passes</th>
+            <th>Max Tests</th>
+            <th>Start Datetime</th>
+            <th>End Datetime</th>
+            <th>Duration</th>
+            <th>Result</th>
         </tr>
         {% for result in result_list %}
         <tr>
             <td><a href="{% url 'host_detail_view' mac=result.host.mac %}">{{ result.host }}</a></td>
+            <td>{{ result.max_passes }}</td>
+            <td>{{ result.max_test }}</td>
             <td>{{ result.start_datetime }}</td>
             <td>{{ result.end_datetime }}</td>
             {% if result.end_datetime %}

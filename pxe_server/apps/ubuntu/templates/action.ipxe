@@ -2,5 +2,5 @@
 :ubuntu
 kernel {% get_static_prefix %}linux
 initrd {% get_static_prefix %}initrd.gz
-imgargs linux auto=true DEBCONF_DEBUG=5 priority=critical hostname=ubuntu netcfg/choose_interface=auto netcfg/get_nameservers= netcfg/no_default_route=true url={{ uri }}/ubuntu/install/${mac}/preseed.cfg -- quite
+imgargs linux auto=true DEBCONF_DEBUG=5 priority=critical hostname=ubuntu netcfg/choose_interface=auto netcfg/get_nameservers= netcfg/no_default_route=true url={{ uri }}/ubuntu/install/${mac}/preseed.cfg -- console=ttyS0,115200n8 console=tty0
 boot

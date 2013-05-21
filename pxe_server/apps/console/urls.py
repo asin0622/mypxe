@@ -6,4 +6,5 @@ urlpatterns = patterns('',
      url(r'^host', include('boot.ui.urls')),
      url(r'^memtest', include('memtest_report.ui.urls')),
      url(r'^group', include('grouping.ui.urls')),
+     url(r'^ubuntu', include('ubuntu.ui.urls')),
 )
